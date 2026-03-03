@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ResumeForge – by Arbaj Ansari</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--r:#c0392b;--r2:#e74c3c;--rd:#7b241c;--g:rgba(192,57,43,.38);--cr:#fdf6ec;--c2:#fff8f0;--ink:#1c0a00;--i2:#3d1a0a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:"Plus Jakarta Sans",sans-serif;background:var(--cr);color:var(--ink);overflow-x:hidden;}
+button,input,textarea{font-family:inherit;}
+canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;width:100%;z-index:500;height:62px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;background:rgba(253,246,236,.93);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid rgba(192,57,43,.1);transition:box-shadow .3s;}
+nav.sc{box-shadow:0 4px 22px rgba(120,30,10,.09);}
+.logo{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:700;color:var(--ink);letter-spacing:-1px;cursor:pointer;}
+.logo span{color:var(--r);}
+.nls{display:flex;align-items:center;gap:26px;}
+.nls a{font-size:13px;font-weight:600;color:var(--i2);text-decoration:none;cursor:pointer;position:relative;transition:color .2s;}
+.nls a:hover{color:var(--r);}
+.nls a::after{content:"";position:absolute;bottom:-3px;left:0;width:0;height:2px;background:var(--r);border-radius:2px;transition:width .3s;}
+.nls a:hover::after{width:100%;}
+.ncta{background:linear-gradient(135deg,var(--rd),var(--r2))!important;color:#fff!important;padding:7px 17px!important;border-radius:50px;box-shadow:0 4px 13px var(--g);}
+.ncta::after{display:none!important;}
+.ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.ham span{display:block;width:22px;height:2px;background:var(--rd);border-radius:2px;}
+@media(max-width:760px){
+  nav{padding:0 14px;}
+  .nls{display:none;position:fixed;top:62px;left:0;width:100%;flex-direction:column;gap:0;padding:8px 0 16px;background:rgba(253,246,236,.98);border-bottom:1px solid rgba(192,57,43,.08);}
+  .nls.op{display:flex;}
+  .nls a{padding:12px 20px;width:100%;border-bottom:1px solid rgba(192,57,43,.05);}
+  .ncta{margin:8px 20px 0;text-align:center;}
+  .ham{display:flex;}
+}
+
+/* ── LANDING ── */
+#land{position:relative;z-index:2;}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:96px 20px 56px;text-align:center;}
+.hbg{display:inline-block;background:linear-gradient(135deg,var(--rd),var(--r2));color:#fff;border-radius:50px;padding:6px 20px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px;box-shadow:0 4px 16px var(--g);animation:fu .6s ease both;}
+.h1{font-family:"Cormorant Garamond",serif;font-size:clamp(50px,10vw,104px);font-weight:900;line-height:.88;letter-spacing:-3px;color:var(--ink);animation:fu .6s .1s ease both;}
+.h1 .ol{display:block;color:transparent;-webkit-text-stroke:2.5px var(--r);}
+.hd{margin-top:18px;font-size:16px;color:#7a4030;max-width:500px;line-height:1.7;animation:fu .6s .2s ease both;}
+.hbs{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap;justify-content:center;animation:fu .6s .3s ease both;}
+.br{position:relative;overflow:hidden;padding:14px 38px;border:none;border-radius:50px;background:linear-gradient(135deg,var(--rd),var(--r2));color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 7px 24px var(--g);transition:transform .25s,box-shadow .25s;}
+.br::after{content:"";position:absolute;width:200%;height:200%;top:-50%;left:-120%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-20deg);animation:sh 2.5s infinite;}
+.br:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 38px var(--g);}
+.bo{padding:14px 38px;border-radius:50px;background:transparent;border:2px solid rgba(192,57,43,.28);color:var(--rd);font-size:14px;font-weight:700;cursor:pointer;transition:all .25s;}
+.bo:hover{background:var(--rd);color:#fff;}
+.hst{display:flex;gap:40px;margin-top:44px;flex-wrap:wrap;justify-content:center;animation:fu .6s .4s ease both;}
+.sn{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:700;color:var(--r);line-height:1;}
+.sl2{font-size:10px;color:#9a6050;margin-top:3px;letter-spacing:.5px;text-transform:uppercase;}
+.sd{margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:6px;animation:fu .6s .5s ease both;}
+.sd span{font-size:11px;color:#b06050;}
+.ar{width:26px;height:26px;border:2px solid rgba(192,57,43,.28);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;animation:bob 1.8s infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+.sec{padding:72px 20px;position:relative;z-index:2;}
+.si{max-width:1040px;margin:0 auto;}
+.tl{display:inline-block;background:rgba(192,57,43,.09);color:var(--rd);border-radius:50px;padding:5px 14px;font-size:10.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.tt{font-family:"Cormorant Garamond",serif;font-size:clamp(26px,5vw,46px);font-weight:700;letter-spacing:-1px;line-height:1.1;color:var(--ink);margin-bottom:10px;}
+.tt span{color:var(--r);}
+.ts{font-size:14px;color:#7a4030;max-width:480px;line-height:1.7;}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease;}
+.rv.on{opacity:1;transform:translateY(0);}
+
+/* steps */
+.stg{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px;}
+@media(max-width:640px){.stg{grid-template-columns:1fr;gap:12px;}}
+.stc{background:rgba(255,252,248,.97);border:1.5px solid rgba(192,57,43,.09);border-radius:17px;padding:22px 19px;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;}
+.stc:hover{transform:translateY(-5px);box-shadow:0 13px 34px var(--g);}
+.stn{font-family:"Cormorant Garamond",serif;font-size:46px;font-weight:700;color:rgba(192,57,43,.09);position:absolute;top:7px;right:13px;line-height:1;}
+.sti{font-size:29px;margin-bottom:10px;}
+.stt{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px;}
+.stx{font-size:12px;color:#7a4030;line-height:1.7;}
+
+/* features */
+.fg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:44px;}
+@media(max-width:580px){.fg{grid-template-columns:1fr;}}
+.fc{background:rgba(255,252,248,.97);border:1.5px solid rgba(192,57,43,.09);border-radius:14px;padding:18px;display:flex;gap:13px;align-items:flex-start;transition:transform .25s,box-shadow .25s;}
+.fc:hover{transform:translateY(-3px);box-shadow:0 10px 28px var(--g);}
+.fi{width:42px;height:42px;flex-shrink:0;border-radius:10px;background:linear-gradient(135deg,var(--rd),var(--r2));display:flex;align-items:center;justify-content:center;font-size:19px;}
+.fc h3{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.fc p{font-size:12px;color:#7a4030;line-height:1.65;}
+
+/* pricing */
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;}
+@media(max-width:640px){.pg{grid-template-columns:1fr;gap:12px;}}
+.pc{background:rgba(255,252,248,.97);border:1.5px solid rgba(192,57,43,.09);border-radius:17px;padding:24px 19px;text-align:center;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden;}
+.pc:hover{transform:translateY(-4px);box-shadow:0 14px 36px var(--g);}
+.pc.pop{border-color:var(--r2);box-shadow:0 7px 30px var(--g);transform:scale(1.03);}
+.pc.pop:hover{transform:scale(1.05) translateY(-3px);}
+.ptg{position:absolute;top:11px;right:-21px;background:linear-gradient(135deg,var(--rd),var(--r2));color:#fff;font-size:9px;font-weight:700;padding:4px 30px;transform:rotate(45deg);}
+.pnm{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--rd);margin-bottom:8px;}
+.ppr{font-family:"Cormorant Garamond",serif;font-size:42px;font-weight:700;color:var(--ink);line-height:1;}
+.ppr sup{font-size:16px;vertical-align:top;margin-top:8px;display:inline-block;}
+.ppe{font-size:11px;color:#9a6050;margin-top:3px;margin-bottom:14px;}
+.pli{list-style:none;margin-bottom:18px;text-align:left;}
+.pli li{font-size:12px;color:#5a3020;padding:4px 0;border-bottom:1px solid rgba(192,57,43,.06);display:flex;align-items:center;gap:6px;}
+.pli li::before{content:"✓";color:var(--r2);font-weight:700;flex-shrink:0;}
+.pbt{width:100%;padding:10px;border-radius:50px;background:linear-gradient(135deg,var(--rd),var(--r2));color:#fff;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .25s;}
+.pbt:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--g);}
+.pbt.ol{background:transparent;border:2px solid rgba(192,57,43,.2);color:var(--rd);}
+.pbt.ol:hover{background:var(--rd);color:#fff;}
+
+/* about */
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center;margin-top:44px;}
+@media(max-width:640px){.ag{grid-template-columns:1fr;gap:24px;}}
+.av{width:100%;max-width:270px;aspect-ratio:1;margin:0 auto;background:linear-gradient(135deg,#1c0a00,#5a2510);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:68px;box-shadow:0 20px 56px var(--g);}
+.at p{font-size:14px;color:#7a4030;line-height:1.8;margin-bottom:10px;}
+.tgs{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px;}
+.tg{background:rgba(192,57,43,.08);color:var(--rd);padding:4px 12px;border-radius:50px;font-size:11px;font-weight:600;border:1px solid rgba(192,57,43,.12);}
+
+/* contact */
+.cog{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:44px;}
+@media(max-width:640px){.cog{grid-template-columns:1fr;gap:18px;}}
+.cot h3{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.cot p{font-size:13px;color:#7a4030;line-height:1.8;margin-bottom:14px;}
+.cif{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;color:var(--i2);}
+.cif .ico{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--rd),var(--r2));display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.cfm{background:rgba(255,252,248,.97);border:1.5px solid rgba(192,57,43,.09);border-radius:17px;padding:22px;}
+.fr{margin-bottom:11px;}
+.fr label{display:block;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--rd);margin-bottom:4px;}
+.fr input,.fr textarea{width:100%;padding:10px 12px;border:1.5px solid rgba(192,57,43,.13);border-radius:9px;font-size:13px;color:var(--ink);background:rgba(255,250,245,.85);transition:.2s;}
+.fr input:focus,.fr textarea:focus{outline:none;border-color:var(--r2);background:#fff;box-shadow:0 0 0 3px rgba(231,76,60,.08);}
+.fr textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.csb{width:100%;padding:11px;background:linear-gradient(135deg,var(--rd),var(--r2));color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s;}
+.csb:hover{transform:translateY(-2px);}
+
+/* cta */
+.ctas{padding:64px 20px;text-align:center;position:relative;z-index:2;}
+.ctab{max-width:620px;margin:0 auto;background:linear-gradient(135deg,var(--rd),var(--r2));border-radius:26px;padding:46px 30px;box-shadow:0 20px 60px var(--g);position:relative;overflow:hidden;}
+.ctab h2{font-family:"Cormorant Garamond",serif;font-size:clamp(22px,5vw,40px);font-weight:700;color:#fff;margin-bottom:10px;}
+.ctab p{font-size:14px;color:rgba(255,228,210,.86);margin-bottom:24px;line-height:1.7;}
+.ctago{padding:14px 46px;background:#fff;color:var(--rd);border:none;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .25s;}
+.ctago:hover{transform:translateY(-3px) scale(1.02);}
+
+/* ── BUILDER ── */
+#pgb{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:86px 20px 64px;position:relative;z-index:2;}
+#pgb.on{display:flex;}
+.bkb{position:fixed;top:71px;left:14px;z-index:600;background:rgba(255,248,240,.94);border:1.5px solid rgba(192,57,43,.16);color:var(--rd);border-radius:50px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:all .25s;display:none;}
+.bkb.on{display:block;}
+.bkb:hover{background:var(--rd);color:#fff;}
+.btop{text-align:center;margin-bottom:40px;animation:fu .6s ease both;}
+.bbg{display:inline-block;background:linear-gradient(135deg,var(--rd),var(--r2));color:#fff;border-radius:50px;padding:6px 18px;font-size:10.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:13px;}
+.bh{font-family:"Cormorant Garamond",serif;font-size:clamp(38px,7vw,72px);font-weight:900;line-height:.9;letter-spacing:-2px;color:var(--ink);}
+.bh .ol{display:block;color:transparent;-webkit-text-stroke:2.5px var(--r);}
+.bp{margin-top:10px;font-size:14px;color:#7a4030;}
+.bp b{color:var(--r);font-weight:700;}
+
+/* cards */
+.cgrd{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;max-width:880px;width:100%;margin-bottom:36px;animation:fu .6s .12s ease both;}
+@media(max-width:660px){.cgrd{grid-template-columns:repeat(2,1fr);gap:9px;}}
+.card{background:rgba(255,252,248,.97);border:1.5px solid rgba(192,57,43,.11);border-radius:16px;padding:20px 11px 15px;text-align:center;cursor:pointer;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s;-webkit-tap-highlight-color:transparent;user-select:none;}
+.cbg{position:absolute;inset:0;background:linear-gradient(135deg,var(--rd),var(--r2));opacity:0;transition:opacity .25s;pointer-events:none;}
+.card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 13px 32px var(--g);border-color:var(--r2);}
+.card:hover .cbg{opacity:1;}
+.card:active{transform:scale(.97);}
+.cem{font-size:27px;display:block;margin-bottom:8px;position:relative;z-index:1;pointer-events:none;transition:transform .25s;}
+.card:hover .cem{transform:scale(1.12) rotate(-7deg);}
+.clb{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--rd);position:relative;z-index:1;transition:color .25s;line-height:1.4;pointer-events:none;}
+.card:hover .clb{color:#fff;}
+.ctk{position:absolute;top:7px;right:7px;z-index:2;width:19px;height:19px;border-radius:50%;background:linear-gradient(135deg,#f1c40f,#d4a843);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#5a3e00;transform:scale(0);transition:transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
+.card.done .ctk{transform:scale(1);}
+.card.done{animation:cgl 2.5s ease-in-out infinite;}
+@keyframes cgl{0%,100%{box-shadow:0 4px 13px rgba(120,30,10,.04);}50%{box-shadow:0 4px 24px rgba(192,57,43,.2);}}
+
+/* gen btn */
+.ga{display:flex;flex-direction:column;align-items:center;gap:8px;animation:fu .6s .22s ease both;}
+.gnb{position:relative;overflow:hidden;padding:14px 52px;background:linear-gradient(135deg,var(--rd),var(--r2));color:#fff;border:none;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 7px 26px var(--g);transition:transform .25s,box-shadow .25s;}
+.gnb::after{content:"";position:absolute;width:200%;height:200%;top:-50%;left:-120%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-20deg);animation:sh 2.5s infinite;}
+.gnb:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 42px var(--g);}
+.gh{font-size:11px;color:#b06050;}
+
+/* ── MODAL ── */
+.ov{position:fixed;inset:0;z-index:900;background:rgba(28,10,0,.6);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:12px;opacity:0;pointer-events:none;transition:opacity .28s;}
+.ov.on{opacity:1;pointer-events:all;}
+.mbox{background:var(--c2);border:1.5px solid rgba(192,57,43,.15);border-radius:21px;width:100%;max-width:510px;max-height:88vh;overflow-y:auto;box-shadow:0 32px 82px rgba(120,30,10,.24);transform:scale(.87) translateY(34px);opacity:0;transition:transform .3s cubic-bezier(.34,1.4,.64,1),opacity .28s;scrollbar-width:thin;scrollbar-color:var(--r2) transparent;}
+.ov.on .mbox{transform:scale(1) translateY(0);opacity:1;}
+.mbox::-webkit-scrollbar{width:4px;}
+.mbox::-webkit-scrollbar-thumb{background:var(--r2);border-radius:4px;}
+.mhead{background:linear-gradient(135deg,var(--rd),var(--r2));padding:18px 23px;border-radius:21px 21px 0 0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:5;}
+.mhead h2{font-family:"Cormorant Garamond",serif;color:#fff;font-size:19px;font-weight:700;}
+.mcl{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.26);color:#fff;width:31px;height:31px;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.mcl:hover{background:rgba(255,255,255,.32);transform:rotate(90deg);}
+.mbody{padding:19px 23px 23px;}
+.row{margin-bottom:13px;}
+.row label{display:block;font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--rd);margin-bottom:4px;}
+.row input,.row textarea{width:100%;padding:10px 11px;border:1.5px solid rgba(192,57,43,.14);border-radius:9px;font-size:13px;color:var(--ink);background:rgba(255,250,245,.85);transition:.2s;}
+.row input:focus,.row textarea:focus{outline:none;border-color:var(--r2);background:#fff;box-shadow:0 0 0 3px rgba(231,76,60,.08);}
+.row textarea{resize:vertical;min-height:74px;line-height:1.65;}
+.tip{font-size:10.5px;color:#b06050;margin-top:3px;}
+.ebox{background:rgba(192,57,43,.03);border:1.5px solid rgba(192,57,43,.08);border-radius:11px;padding:13px;margin-bottom:9px;position:relative;}
+.rmb{position:absolute;top:8px;right:8px;background:#fde;border:1px solid #f99;color:#c00;border-radius:5px;padding:2px 7px;font-size:10px;font-weight:600;cursor:pointer;transition:.2s;}
+.rmb:hover{background:#c00;color:#fff;}
+.addb{background:transparent;border:2px dashed rgba(192,57,43,.24);color:var(--r);padding:8px;width:100%;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;transition:.22s;margin-bottom:6px;}
+.addb:hover{background:var(--r);color:#fff;border-style:solid;}
+.svb{width:100%;padding:11px;background:linear-gradient(135deg,var(--rd),var(--r2));color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 5px 18px var(--g);transition:all .25s;}
+.svb:hover{transform:translateY(-2px);box-shadow:0 9px 26px var(--g);}
+.phbx{border:2px dashed rgba(192,57,43,.24);border-radius:11px;padding:22px;text-align:center;cursor:pointer;transition:.25s;background:rgba(192,57,43,.02);}
+.phbx:hover{border-color:var(--r2);background:rgba(192,57,43,.04);}
+.phbx p{font-size:12px;color:#b06050;margin-top:6px;line-height:1.5;}
+#phr{width:80px;height:80px;border-radius:50%;object-fit:cover;display:none;margin:8px auto 0;border:3px solid var(--r2);}
+
+/* ── OUTPUT PAGE ── */
+#pgo{display:none;padding:84px 20px 50px;position:relative;z-index:2;}
+#pgo.on{display:block;}
+.octrl{display:flex;gap:9px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;}
+.obt{padding:10px 24px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s;}
+.obt.pr{background:linear-gradient(135deg,var(--rd),var(--r2));color:#fff;border:none;box-shadow:0 5px 18px var(--g);}
+.obt.pr:hover{transform:translateY(-2px);box-shadow:0 11px 30px var(--g);}
+.obt.se{background:rgba(255,248,240,.92);color:var(--rd);border:2px solid rgba(192,57,43,.2);}
+.obt.se:hover{background:var(--rd);color:#fff;}
+
+/* ── RESUME CARD ── */
+#rc{width:794px;min-height:1122px;background:#fff;margin:0 auto;box-shadow:0 24px 72px rgba(120,30,10,.18);display:grid;grid-template-columns:220px 1fr;border-radius:4px;overflow:hidden;font-family:"Plus Jakarta Sans",sans-serif;}
+
+/* LEFT PANEL – white background */
+.rl{background:#fff;position:relative;overflow:hidden;border-right:1.5px solid rgba(192,57,43,.12);}
+
+/* RIBBON – top-left corner, orange, exactly like image */
+.rbn{
+  position:absolute;
+  top:32px;
+  left:-46px;
+  width:172px;
+  background:#e8470a;
+  color:#fff;
+  text-align:center;
+  padding:10px 0 9px;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  -webkit-transform:rotate(-45deg);
+  transform:rotate(-45deg);
+  z-index:10;
+  border-top:2px solid rgba(255,255,255,.42);
+  border-bottom:2px solid rgba(255,255,255,.42);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-shadow:2px 2px 0 rgba(140,40,0,.4),0 4px 14px rgba(150,50,0,.38);
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+.rphw{display:flex;justify-content:center;padding:26px 20px 12px;}
+.rph,.rphd{width:102px;height:102px;border-radius:50%;border:3px solid var(--r2);box-shadow:0 0 0 4px rgba(231,76,60,.13),0 7px 22px rgba(120,30,10,.16);}
+.rph{object-fit:cover;}
+.rphd{background:linear-gradient(135deg,var(--rd),var(--r2));display:flex;align-items:center;justify-content:center;font-size:33px;}
+.rsec{padding:11px 16px 4px;}
+.rstit{font-size:7.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--r);border-bottom:1px solid rgba(192,57,43,.16);padding-bottom:4px;margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.rstit::before{content:"";width:11px;height:2px;background:var(--r2);border-radius:2px;flex-shrink:0;}
+.rci{display:flex;align-items:flex-start;gap:5px;margin-bottom:6px;font-size:10px;color:#2a2a2a;word-break:break-all;line-height:1.45;}
+.rcii{font-size:9.5px;color:var(--r);flex-shrink:0;margin-top:1px;}
+.rpt{font-size:9px;color:#333;line-height:1.8;}
+.rsk{display:flex;align-items:flex-start;gap:5px;margin-bottom:5px;font-size:10px;color:#222;}
+.rsk::before{content:"▸";color:var(--r2);font-size:9px;flex-shrink:0;}
+.rlg{display:flex;align-items:flex-start;gap:5px;margin-bottom:5px;font-size:10px;color:#222;}
+.rlg::before{content:"◈";color:var(--r2);font-size:8px;flex-shrink:0;margin-top:2px;}
+
+/* RIGHT PANEL */
+.rright{background:#fff;}
+.rnb{padding:22px 23px 6px;}
+.rfn{font-size:10.5px;font-weight:400;color:#aaa;letter-spacing:3.5px;text-transform:uppercase;margin-bottom:2px;}
+.rln{font-family:"Cormorant Garamond",serif;font-size:35px;font-weight:700;color:#0a0400;line-height:1;letter-spacing:-1px;}
+.rjb{background:linear-gradient(135deg,var(--rd),var(--r2));padding:7px 23px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.rjt{font-size:9px;font-weight:700;color:#fff;letter-spacing:3.5px;text-transform:uppercase;}
+.rrsec{padding:11px 23px 4px;}
+.rrtit{font-size:8.5px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--rd);border-bottom:2px solid var(--r2);padding-bottom:4px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.rrtit::before{content:"";width:15px;height:2px;background:linear-gradient(90deg,var(--rd),var(--r2));border-radius:2px;flex-shrink:0;}
+.rex{margin-bottom:11px;padding-bottom:9px;border-bottom:1px dashed rgba(192,57,43,.08);}
+.rex:last-child{border-bottom:none;}
+.rext{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1px;}
+.rexc{font-size:10px;font-weight:800;color:#0a0400;text-transform:uppercase;letter-spacing:.4px;}
+.rexm{font-size:8px;color:var(--rd);font-weight:700;white-space:nowrap;margin-left:4px;margin-top:1px;}
+.rexr{font-size:9.5px;font-weight:600;color:var(--rd);margin-bottom:3px;font-style:italic;}
+.rexb{font-size:9px;color:#1a0800;padding-left:10px;position:relative;margin-bottom:2px;line-height:1.55;}
+.rexb::before{content:"–";position:absolute;left:0;color:var(--r2);font-weight:700;}
+.red2{margin-bottom:8px;padding-left:8px;border-left:3px solid var(--r2);}
+.redd{font-size:10px;font-weight:800;color:#0a0400;text-transform:uppercase;letter-spacing:.3px;}
+.reds{font-size:9px;color:var(--rd);font-weight:700;margin-top:1px;}
+.redm{font-size:8.5px;color:#4a2010;font-weight:500;margin-top:1px;}
+
+/* FOOTER */
+footer{background:linear-gradient(170deg,#1c0a00,#3d1a0a);padding:48px 32px 24px;position:relative;z-index:2;}
+.fi2{max-width:1040px;margin:0 auto;}
+.ftop{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:34px;margin-bottom:36px;}
+@media(max-width:640px){.ftop{grid-template-columns:1fr 1fr;gap:20px;}}
+.flo{font-family:"Cormorant Garamond",serif;font-size:23px;font-weight:700;color:#fff;letter-spacing:-1px;margin-bottom:7px;}
+.flo span{color:var(--r2);}
+.fbr p{font-size:11px;color:rgba(255,200,170,.52);line-height:1.8;margin-bottom:10px;}
+.hey{font-size:15px;font-weight:700;color:rgba(255,200,170,.88);font-family:"Cormorant Garamond",serif;font-style:italic;}
+.fcol h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--r2);margin-bottom:11px;}
+.fcol a{display:block;font-size:11px;color:rgba(255,200,170,.52);margin-bottom:6px;transition:color .2s;cursor:pointer;}
+.fcol a:hover{color:var(--r2);}
+.fbot{border-top:1px solid rgba(255,200,170,.06);padding-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.fbot p{font-size:10.5px;color:rgba(255,200,170,.36);}
+.fbot .dv{color:var(--r2);font-weight:700;}
+.soc{display:flex;gap:7px;}
+.slnk{width:32px;height:32px;border-radius:8px;background:rgba(255,200,170,.05);border:1px solid rgba(255,200,170,.07);display:flex;align-items:center;justify-content:center;font-size:13px;color:rgba(255,200,170,.4);transition:.22s;cursor:pointer;}
+.slnk:hover{background:var(--r2);color:#fff;}
+
+/* ── PRINT ── */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  @page{margin:0;size:A4 portrait;}
+  html,body{margin:0;padding:0;width:100%;}
+  nav,#pgb,#land,.bkb,footer,.octrl,canvas{display:none!important;}
+  #pgo{display:block!important;padding:0!important;margin:0!important;}
+  #rc{
+    box-shadow:none!important;
+    width:100%!important;
+    min-height:100vh!important;
+    border-radius:0!important;
+    margin:0!important;
+    grid-template-columns:28% 72%!important;
+  }
+  .rl{background:#fff!important;border-right:1.5px solid rgba(192,57,43,.12)!important;}
+  .rbn{background:#e8470a!important;color:#fff!important;}
+  .rjb{background:linear-gradient(135deg,#7b241c,#e74c3c)!important;}
+  .rright{background:#fff!important;}
+}
+
+@media(max-width:820px){#rc{width:100%;grid-template-columns:175px 1fr;}.rln{font-size:24px;}}
+@media(max-width:500px){#rc{grid-template-columns:1fr;}}
+
+@keyframes fu{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sh{0%{left:-120%}100%{left:120%}}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<!-- NAV -->
+<nav id="nb">
+  <div class="logo" onclick="goHome()">╰┈➤ Er.<span>Arbaj Ansari</span></div>
+  <div class="nls" id="nls">
+    <a onclick="goHome();closeMob()">Home</a>
+    <a onclick="scTo('prc');closeMob()">Pricing</a>
+    <a onclick="scTo('abt');closeMob()">About</a>
+    <a onclick="scTo('con');closeMob()">Contact</a>
+    <a class="ncta" onclick="goB();closeMob()">Create Resume &#10024;</a>
+  </div>
+  <button class="ham" onclick="toggleNav()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- LANDING PAGE -->
+<div id="land">
+  <!-- HERO -->
+  <div class="hero" id="hm">
+    <div class="hbg">&#10022; Arbaj Ansari™</div>
+    <h1 class="h1"><span class="ol">Build </span>Professional Resume</h1>
+    <p class="hd">Build a stunning professional resume in minutes.  
+This is specially provided free of 💸 cost by Arbaj Ansari.” </p>
+    <div class="hbs">
+      <button class="br" onclick="goB()">&#10024; Create Your Resume</button>
+      <button class="bo" onclick="scTo('how')">How It Works &#8595;</button>
+    </div>
+    <div class="hst">
+      <div><div class="sn">50K+</div><div class="sl2">Resumes Created</div></div>
+      <div><div class="sn">98%</div><div class="sl2">Satisfaction Rate</div></div>
+      <div><div class="sn">3 Min</div><div class="sl2">Avg. Build Time</div></div>
+    </div>
+    <div class="sd"><span>Scroll to explore</span><div class="ar">&#8595;</div></div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="sec" id="how">
+    <div class="si">
+      <div class="rv">
+        <div class="tl">How It Works</div>
+        <h2 class="tt">Build in <span>3 simple steps</span></h2>
+        <p class="ts">No confusion. Just click, fill, and download your perfect resume.</p>
+      </div>
+      <div class="stg rv">
+        <div class="stc"><div class="stn">01</div><div class="sti">&#9997;&#65039;</div><h3 class="stt">Fill Your Details</h3><p class="stx">Click each card — Personal Info, Experience, Education, Skills and more. Fill in the smooth popup form.</p></div>
+        <div class="stc"><div class="stn">02</div><div class="sti">&#9889;</div><h3 class="stt">Generate Instantly</h3><p class="stx">Hit Make Your Resume and watch your info transform into a beautifully formatted resume in seconds.</p></div>
+        <div class="stc"><div class="stn">03</div><div class="sti">&#128196;</div><h3 class="stt">Download &amp; Share</h3><p class="stx">Click Print / Save PDF to download. Share with employers or LinkedIn instantly.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="sec" style="background:rgba(192,57,43,.03);">
+    <div class="si">
+      <div class="rv">
+        <div class="tl">Features</div>
+        <h2 class="tt">Everything to <span>stand out</span></h2>
+        <p class="ts">Packed with powerful features to make your resume shine.</p>
+      </div>
+      <div class="fg rv">
+        <div class="fc"><div class="fi">&#128247;</div><div><h3>Photo Upload</h3><p>Add your professional photo with styled circular frame and dynamic ribbon badge.</p></div></div>
+        <div class="fc"><div class="fi">&#127880;</div><div><h3>Dynamic Ribbon</h3><p>Bold orange diagonal ribbon on top-left corner shows your first skill automatically.</p></div></div>
+        <div class="fc"><div class="fi">&#128188;</div><div><h3>Multiple Experiences</h3><p>Add unlimited work experiences with company, role, duration and achievement bullets.</p></div></div>
+        <div class="fc"><div class="fi">&#128443;&#65039;</div><div><h3>One-Click PDF</h3><p>Export full-page PDF with one click. Ribbon stays orange in print. No extra tools needed.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+    <div class="sec" id="prc">
+    <div class="si">
+      <div class="rv">
+        <div class="tl">Pricing</div>
+        <h2 class="tt">Simple <span>transparent</span> pricing</h2>
+        <p class="ts">Start free and upgrade anytime.</p>
+      </div>
+      <div class="pg rv">
+        <div class="pc">
+          <div class="pnm">Starter</div><div class="ppr"><sup>&#8377;</sup>0</div><div class="ppe">Forever Free</div>
+          <ul class="pli"><li>1 Resume</li><li>PDF Download</li><li>Photo Upload</li><li>All 8 Sections</li><li>Ribbon Badge</li></ul>
+          <button class="pbt ol" onclick="goB()">Get Started Free</button>
+        </div>
+        <div class="pc pop">
+          <div class="ptg">Popular</div>
+          <div class="pnm">Pro</div><div class="ppr"><sup>&#8377;</sup>99</div><div class="ppe">per month</div>
+          <ul class="pli"><li>Unlimited Resumes</li><li>5 Templates</li><li>PDF + Word</li><li>Custom Colors</li><li>Priority Support</li></ul>
+          <button class="pbt" onclick="goB()">Start Pro Trial</button>
+        </div>
+        <div class="pc">
+          <div class="pnm">Lifetime</div><div class="ppr"><sup>&#8377;</sup>499</div><div class="ppe">one-time</div>
+          <ul class="pli"><li>Everything in Pro</li><li>All Templates</li><li>ATS Checker</li><li>Lifetime Updates</li><li>LinkedIn Optimizer</li></ul>
+          <button class="pbt ol" onclick="goB()">Buy Lifetime</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="sec" id="abt" style="background:rgba(192,57,43,.03);">
+    <div class="si">
+      <div class="ag rv">
+        <div class="av">&#128104;&#8205;&#128187;</div>
+        <div class="at">
+          <div class="tl">About the Engineer</div>
+          <h2 class="tt">Hey, I'm <span>Arbaj Ansari</span> &#128075;</h2>
+          <p>Arbaj Ansari | Electronics Engineering Student at MMIT College Hariharpur, Gorakhpur| Aspiring Web Developer | Engineer Enthusiast
+.</p>
+          <p>Bridging Electronics & Code | Diploma Student at MMIT | focusing on the core principles of hardware logic and  learning coding .
+
+.</p>
+          <div class="tgs">
+            <span class="tg">Web Developer</span><span class="tg">UI /UX</span><span class="tg">coder</span><span class="tg">React &amp; JS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="sec" id="con">
+    <div class="si">
+      <div class="rv">
+        <div class="tl">Contact</div>
+        <h2 class="tt">Get in <span>touch</span></h2>
+        <p class="ts">Have a question or feedback? I'd love to hear from you.</p>
+      </div>
+      <div class="cog rv">
+        <div class="cot">
+          <h3>Let's connect</h3>
+          <p>Whether you have feedback or want to collaborate, my inbox is always open.</p>
+          <div class="cif"><div class="ico">&#9993;</div><span>arbajansari70681@gmail.com</span></div>
+          <div class="cif"><div class="ico">&#128241;</div><span>+91 9214764453</span></div>
+          <div class="cif"><div class="ico">&#128205;</div><span>MMIT Hariharpur, Gorakhpur</span></div>
+          <div class="cif"><div class="ico">&#128188;</div><span>linkedin.com/in/arbajansari</span></div>
+        </div>
+        <div class="cfm">
+          <div class="fr"><label>Your Name</label><input placeholder="Arbaj.."></div>
+          <div class="fr"><label>Email</label><input type="email" placeholder="arbajxxxx@gmail.com"></div>
+          <div class="fr"><label>Message</label><textarea placeholder="write Your message..."></textarea></div>
+          <button class="csb">Send Message &#9992;&#65039;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="ctas">
+    <div class="ctab rv">
+      <h2>Ready to build your perfect resume?</h2>
+      <p>Join 1000+ professionals who created their dream resume with Arbaj ansari Completely free to start.</p>
+      <button class="ctago" onclick="goB()">&#128640; Create Your Resume Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- BACK BUTTON -->
+<button class="bkb" id="bkb" onclick="goHome()">&#8592; Back to Home</button>
+
+<!-- BUILDER PAGE -->
+<div id="pgb">
+  <div class="btop">
+    <div class="bbg">&#10022; Resume Builder Pro</div>
+    <h2 class="bh"><span class="ol">Resume</span>Forge</h2>
+    <p class="bp">Click each section &#8594; Fill details &#8594; Click <b>Make Your Resume</b></p>
+  </div>
+  <div class="cgrd">
+    <div class="card" id="c-personal"  onclick="openM('personal')"> <div class="cbg"></div><span class="cem">&#128100;</span><span class="clb">Personal Info</span><span class="ctk">&#10003;</span></div>
+    <div class="card" id="c-contact"   onclick="openM('contact')">  <div class="cbg"></div><span class="cem">&#128236;</span><span class="clb">Contact</span><span class="ctk">&#10003;</span></div>
+    <div class="card" id="c-profile"   onclick="openM('profile')">  <div class="cbg"></div><span class="cem">&#128221;</span><span class="clb">Profile</span><span class="ctk">&#10003;</span></div>
+    <div class="card" id="c-experience"onclick="openM('experience')"><div class="cbg"></div><span class="cem">&#128188;</span><span class="clb">Experience</span><span class="ctk">&#10003;</span></div>
+    <div class="card" id="c-education" onclick="openM('education')"> <div class="cbg"></div><span class="cem">&#127891;</span><span class="clb">Education</span><span class="ctk">&#10003;</span></div>
+    <div class="card" id="c-skills"    onclick="openM('skills')">   <div class="cbg"></div><span class="cem">&#9889;</span><span class="clb">Skills</span><span class="ctk">&#10003;</span></div>
+    <div class="card" id="c-languages" onclick="openM('languages')"> <div class="cbg"></div><span class="cem">&#127760;</span><span class="clb">Languages</span><span class="ctk">&#10003;</span></div>
+    <div class="card" id="c-photo"     onclick="openM('photo')">    <div class="cbg"></div><span class="cem">&#128247;</span><span class="clb">Photo</span><span class="ctk">&#10003;</span></div>
+  </div>
+  <div class="ga">
+    <button class="gnb" onclick="makeR()">&#10024; Make Your Resume</button>
+    <p class="gh">Fill all 8 sections for best result</p>
+  </div>
+</div>
+
+<!-- OUTPUT PAGE -->
+<div id="pgo">
+  <div class="octrl">
+    <button class="obt se" onclick="goB()">&#8592; Edit Resume</button>
+    <button class="obt pr" onclick="window.print()">&#128443; Print / Save PDF</button>
+  </div>
+  <div id="rc">
+    <!-- LEFT PANEL -->
+    <div class="rl">
+      <div class="rbn" id="rbn">&#9203; EXPERT</div>
+      <div class="rphw">
+        <div class="rphd" id="rphd">&#128100;</div>
+        <img id="rphi" class="rph" style="display:none" alt="photo">
+      </div>
+      <div class="rsec"><div class="rstit">Contact</div><div id="rcts"></div></div>
+      <div class="rsec"><div class="rstit">Profile</div><p class="rpt" id="rpt"></p></div>
+      <div class="rsec"><div class="rstit">Skills</div><div id="rskl"></div></div>
+      <div class="rsec"><div class="rstit">Languages</div><div id="rlng"></div></div>
+    </div>
+    <!-- RIGHT PANEL -->
+    <div class="rright">
+      <div class="rnb">
+        <div class="rfn" id="rfn">FIRST NAME</div>
+        <div class="rln" id="rln">Last Name</div>
+      </div>
+      <div class="rjb"><div class="rjt" id="rjt">JOB TITLE</div></div>
+      <div class="rrsec"><div class="rrtit">Professional Experience</div><div id="rexp"></div></div>
+      <div class="rrsec"><div class="rrtit">Education</div><div id="redu"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="ft">
+  <div class="fi2">
+    <div class="ftop">
+      <div class="fbr">
+        <div class="flo">Arbaj<span>Ansari</span></div>
+        <p>Build a stunning professional resume in minutes. Free, fast and beautifully designed.</p>
+        <div class="hey">"Hey, I'm Arbaj Ansari &#128075;"</div>
+      </div>
+      <div class="fcol"><h4>Product</h4><a onclick="goHome()">Home</a><a onclick="scTo('how')">How It Works</a><a onclick="scTo('prc')">Pricing</a><a onclick="goB()">Create Resume</a></div>
+      <div class="fcol"><h4>Company</h4><a onclick="scTo('abt')">About</a><a onclick="scTo('con')">Contact</a><a>Privacy Policy</a><a>Terms of Use</a></div>
+      <div class="fcol"><h4>Connect</h4><a>LinkedIn</a><a>GitHub</a><a>Twitter</a><a>Instagram</a></div>
+    </div>
+    <div class="fbot">
+      <p>&#169; 2025 ResumeForge &nbsp;&#183;&nbsp; Developed by <span class="dv">Arbaj Ansari</span> &nbsp;&#183;&nbsp; All Rights Reserved</p>
+      <div class="soc"><div class="slnk">&#128188;</div><div class="slnk">&#128025;</div><div class="slnk">&#128038;</div><div class="slnk">&#128248;</div></div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="ov" id="ov" onclick="ovCk(event)">
+  <div class="mbox">
+    <div class="mhead"><h2 id="mttl">Section</h2><button class="mcl" onclick="closeM()">&#10005;</button></div>
+    <div class="mbody" id="mbody"></div>
+  </div>
+</div>
+
+<script>
+// CANVAS
+(function(){
+  var c=document.getElementById('cv'),x=c.getContext('2d');
+  function sz(){c.width=innerWidth;c.height=innerHeight;}sz();
+  addEventListener('resize',sz);
+  var O=[];
+  for(var i=0;i<9;i++)O.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:90+Math.random()*210,dx:(Math.random()-.5)*.35,dy:(Math.random()-.5)*.35,a:.018+Math.random()*.06,col:i%2?'212,140,67':'192,57,43'});
+  (function L(){
+    x.clearRect(0,0,c.width,c.height);
+    O.forEach(function(o){
+      var g=x.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);
+      g.addColorStop(0,'rgba('+o.col+','+o.a+')');g.addColorStop(1,'transparent');
+      x.fillStyle=g;x.beginPath();x.arc(o.x,o.y,o.r,0,Math.PI*2);x.fill();
+      o.x+=o.dx;o.y+=o.dy;
+      if(o.x<-o.r||o.x>c.width+o.r)o.dx*=-1;
+      if(o.y<-o.r||o.y>c.height+o.r)o.dy*=-1;
+    });
+    requestAnimationFrame(L);
+  })();
+})();
+
+// NAV
+addEventListener('scroll',function(){document.getElementById('nb').classList.toggle('sc',scrollY>28);});
+function toggleNav(){document.getElementById('nls').classList.toggle('op');}
+function closeMob(){document.getElementById('nls').classList.remove('op');}
+function scTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
+
+// SCROLL REVEAL
+(function(){
+  var els=document.querySelectorAll('.rv');
+  var ob=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.1});
+  els.forEach(function(el){ob.observe(el);});
+})();
+
+// PAGE SWITCH
+function show(pg){
+  document.getElementById('land').style.display='none';
+  document.getElementById('pgb').style.display='none';
+  document.getElementById('pgo').style.display='none';
+  document.getElementById('ft').style.display='none';
+  document.getElementById('bkb').style.display='none';
+  if(pg==='land'){
+    document.getElementById('land').style.display='block';
+    document.getElementById('ft').style.display='block';
+  } else if(pg==='builder'){
+    document.getElementById('pgb').style.display='flex';
+    document.getElementById('bkb').style.display='block';
+  } else if(pg==='output'){
+    document.getElementById('pgo').style.display='block';
+    document.getElementById('bkb').style.display='block';
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goHome(){show('land');closeMob();}
+function goB(){show('builder');closeMob();}
+
+// DATA
+var D={fn:'',ln:'',jt:'',em:'',ph:'',ad:'',li:'',sm:'',sk:[],lg:[],ex:[],ed:[],photo:null};
+var EC=0,DC=0;
+
+// MODAL
+var TITLES={personal:'Personal Information',contact:'Contact Details',profile:'Profile Summary',experience:'Work Experience',education:'Education',skills:'Skills',languages:'Languages',photo:'Upload Photo'};
+function openM(sec){
+  document.getElementById('mttl').textContent=TITLES[sec];
+  document.getElementById('mbody').innerHTML=buildForm(sec);
+  document.getElementById('ov').classList.add('on');
+  if(sec==='photo'&&D.photo){var p=document.getElementById('phr');if(p){p.src=D.photo;p.style.display='block';}}
+}
+function closeM(){document.getElementById('ov').classList.remove('on');}
+function ovCk(e){if(e.target===document.getElementById('ov'))closeM();}
+function done(s){document.getElementById('c-'+s).classList.add('done');closeM();}
+
+// FORM BUILDER - using single quotes throughout
+function buildForm(s){
+  if(s==='personal'){
+    var h='';
+    h+='<div class="row"><label>First Name</label><input id="fn" placeholder="Arbaj ="'+D.fn+'"></div>';
+    h+='<div class="row"><label>Last Name</label><input id="ln" placeholder="Ansari" value="'+D.ln+'"></div>';
+    h+='<div class="row"><label>Job Title</label><input id="jt" placeholder="Electronics Engineer" value="'+D.jt+'"></div>';
+    h+='<button class="svb" onclick="sP()">&#10003; Save Personal Info</button>';
+    return h;
+  }
+  if(s==='contact'){
+    var h='';
+    h+='<div class="row"><label>Email</label><input id="em" type="email" placeholder="your@gmail.com" value="'+D.em+'"></div>';
+    h+='<div class="row"><label>Phone</label><input id="ph" placeholder="+91 9214764453" value="'+D.ph+'"></div>';
+    h+='<div class="row"><label>City / Address</label><input id="ad" placeholder="Hariharpur, Gorakhpur,India" value="'+D.ad+'"></div>';
+    h+='<div class="row"><label>LinkedIn / Website</label><input id="li" placeholder="linkedin.com/in/yourname" value="'+D.li+'"></div>';
+    h+='<button class="svb" onclick="sC()">&#10003; Save Contact</button>';
+    return h;
+  }
+  if(s==='profile'){
+    var h='';
+    h+='<div class="row"><label>Profile Summary</label>';
+    h+='<textarea id="sm" rows="6" placeholder="A passionate professional with 5+ years of experience...">'+D.sm+'</textarea></div>';
+    h+='<button class="svb" onclick="sSm()">&#10003; Save Profile</button>';
+    return h;
+  }
+  if(s==='skills'){
+    var h='';
+    h+='<div class="row"><label>Skills (one per line)</label>';
+    h+='<textarea id="sk" rows="8" placeholder="Software Engineering&#10;Data Analysis&#10;Team Leadership">'+D.sk.join('\n')+'</textarea>';
+    h+='<div class="tip">&#9889; First skill appears on the ribbon!</div></div>';
+    h+='<button class="svb" onclick="sSk()">&#10003; Save Skills</button>';
+    return h;
+  }
+  if(s==='languages'){
+    var h='';
+    h+='<div class="row"><label>Languages (one per line)</label>';
+    h+='<textarea id="lg" rows="5" placeholder="English: Native&#10;Hindi: Fluent&#10;French: Intermediate">'+D.lg.join('\n')+'</textarea>';
+    h+='<div class="tip">Format: Language: Level</div></div>';
+    h+='<button class="svb" onclick="sLg()">&#10003; Save Languages</button>';
+    return h;
+  }
+  if(s==='photo'){
+    var h='';
+    h+='<div class="row"><label>Your Photo</label>';
+    h+='<div class="phbx" onclick="document.getElementById(\'phi\').click()">';
+    h+='<div style="font-size:38px">&#128247;</div>';
+    h+='<p>Click to upload photo<br><small>JPG or PNG recommended</small></p>';
+    h+='<img id="phr" alt=""></div>';
+    h+='<input type="file" id="phi" accept="image/*" style="display:none" onchange="prPh(event)"></div>';
+    h+='<button class="svb" onclick="sPh()">&#10003; Save Photo</button>';
+    return h;
+  }
+  if(s==='experience'){
+    EC=D.ex.length||1;
+    var entries=D.ex.length?D.ex:[{}];
+    var h='<div id="ew">';
+    for(var i=0;i<entries.length;i++) h+=eBlock(entries[i],i);
+    h+='</div>';
+    h+='<button class="addb" onclick="addExp()">&#65291; Add Another Experience</button>';
+    h+='<button class="svb" onclick="sEx()">&#10003; Save Experience</button>';
+    return h;
+  }
+  if(s==='education'){
+    DC=D.ed.length||1;
+    var entries=D.ed.length?D.ed:[{}];
+    var h='<div id="dw">';
+    for(var i=0;i<entries.length;i++) h+=dBlock(entries[i],i);
+    h+='</div>';
+    h+='<button class="addb" onclick="addEdu()">&#65291; Add Another Education</button>';
+    h+='<button class="svb" onclick="sEd()">&#10003; Save Education</button>';
+    return h;
+  }
+  return '';
+}
+
+function eBlock(e,i){
+  e=e||{};
+  var h='<div class="ebox" id="eb'+i+'">';
+  if(i>0) h+='<button class="rmb" onclick="document.getElementById(\'eb'+i+'\').remove()">&#10005;</button>';
+  h+='<div class="row"><label>Company</label><input class="eco" placeholder="Google, TCS, Amazon" value="'+(e.company||'')+'"></div>';
+  h+='<div class="row"><label>Role</label><input class="ero" placeholder="Software Engineer" value="'+(e.role||'')+'"></div>';
+  h+='<div class="row"><label>Duration &amp; Location</label><input class="emt" placeholder="Mumbai | Jan 2020" value="'+(e.meta||'')+'"></div>';
+  h+='<div class="row"><label>Achievements (one per line)</label><textarea class="ebl" rows="3" placeholder="Led team of 10&#10;Increased performance by 40%">'+(e.bullets||[]).join('\n')+'</textarea></div>';
+  h+='</div>';
+  return h;
+}
+
+function dBlock(e,i){
+  e=e||{};
+  var h='<div class="ebox" id="db'+i+'">';
+  if(i>0) h+='<button class="rmb" onclick="document.getElementById(\'db'+i+'\').remove()">&#10005;</button>';
+  h+='<div class="row"><label>Degree</label><input class="ddg" placeholder="Diploma" value="'+(e.degree||'')+'"></div>';
+  h+='<div class="row"><label>University / School</label><input class="dsc" placeholder="Electronics Eng" value="'+(e.school||'')+'"></div>';
+  h+='<div class="row"><label>Year &amp; Location</label><input class="dmt" placeholder="2023-2025 | Mumbai" value="'+(e.meta||'')+'"></div>';
+  h+='</div>';
+  return h;
+}
+
+function addExp(){var w=document.getElementById('ew');if(!w)return;var d=document.createElement('div');d.innerHTML=eBlock({},EC++);w.appendChild(d.firstElementChild);}
+function addEdu(){var w=document.getElementById('dw');if(!w)return;var d=document.createElement('div');d.innerHTML=dBlock({},DC++);w.appendChild(d.firstElementChild);}
+
+// SAVE FUNCTIONS
+function gv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+function sP(){D.fn=gv('fn');D.ln=gv('ln');D.jt=gv('jt');done('personal');}
+function sC(){D.em=gv('em');D.ph=gv('ph');D.ad=gv('ad');D.li=gv('li');done('contact');}
+function sSm(){var e=document.getElementById('sm');D.sm=e?e.value.trim():'';done('profile');}
+function sSk(){var e=document.getElementById('sk');D.sk=e?e.value.split('\n').map(function(s){return s.trim();}).filter(Boolean):[];done('skills');}
+function sLg(){var e=document.getElementById('lg');D.lg=e?e.value.split('\n').map(function(s){return s.trim();}).filter(Boolean):[];done('languages');}
+function prPh(ev){
+  var f=ev.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(x){
+    D.photo=x.target.result;
+    var p=document.getElementById('phr');
+    if(p){p.src=x.target.result;p.style.display='block';}
+  };
+  r.readAsDataURL(f);
+}
+function sPh(){done('photo');}
+function sEx(){
+  D.ex=[];
+  document.querySelectorAll('#ew .ebox').forEach(function(el){
+    var co=el.querySelector('.eco');co=co?co.value.trim():'';if(!co)return;
+    var ro=el.querySelector('.ero'),mt=el.querySelector('.emt'),bl=el.querySelector('.ebl');
+    D.ex.push({company:co,role:ro?ro.value.trim():'',meta:mt?mt.value.trim():'',bullets:bl?bl.value.split('\n').map(function(s){return s.trim();}).filter(Boolean):[]});
+  });
+  done('experience');
+}
+function sEd(){
+  D.ed=[];
+  document.querySelectorAll('#dw .ebox').forEach(function(el){
+    var dg=el.querySelector('.ddg');dg=dg?dg.value.trim():'';if(!dg)return;
+    var sc=el.querySelector('.dsc'),mt=el.querySelector('.dmt');
+    D.ed.push({degree:dg,school:sc?sc.value.trim():'',meta:mt?mt.value.trim():''});
+  });
+  done('education');
+}
+
+// BUILD RESUME
+function makeR(){
+  document.getElementById('rfn').textContent=(D.fn||'FIRST NAME').toUpperCase();
+  document.getElementById('rln').textContent=D.ln||'Last Name';
+  document.getElementById('rjt').textContent=(D.jt||'JOB TITLE').toUpperCase();
+
+  var rt=D.sk.length?D.sk[0]:(D.jt||'Expert');
+  if(rt.length>13)rt=rt.substring(0,13)+'...';
+  document.getElementById('rbn').textContent='\u23f1 '+rt.toUpperCase();
+
+  if(D.photo){
+    document.getElementById('rphd').style.display='none';
+    var img=document.getElementById('rphi');img.src=D.photo;img.style.display='block';
+  } else {
+    document.getElementById('rphd').style.display='flex';
+    document.getElementById('rphi').style.display='none';
+  }
+
+  var ct=document.getElementById('rcts');ct.innerHTML='';
+  var cdata=[{i:'\u2709',v:D.em},{i:'\ud83d\udcde',v:D.ph},{i:'\ud83d\udccd',v:D.ad},{i:'\ud83d\udd17',v:D.li}];
+  cdata.forEach(function(c){
+    if(c.v)ct.innerHTML+='<div class="rci"><span class="rcii">'+c.i+'</span>'+c.v+'</div>';
+  });
+
+  document.getElementById('rpt').textContent=D.sm;
+
+  var sk=document.getElementById('rskl');sk.innerHTML='';
+  D.sk.forEach(function(s){sk.innerHTML+='<div class="rsk">'+s+'</div>';});
+
+  var lg=document.getElementById('rlng');lg.innerHTML='';
+  D.lg.forEach(function(l){lg.innerHTML+='<div class="rlg">'+l+'</div>';});
+
+  var ex=document.getElementById('rexp');ex.innerHTML='';
+  D.ex.forEach(function(e){
+    var buls='';
+    e.bullets.forEach(function(b){buls+='<div class="rexb">'+b+'</div>';});
+    ex.innerHTML+='<div class="rex"><div class="rext"><div class="rexc">'+e.company+'</div><div class="rexm">'+e.meta+'</div></div><div class="rexr">'+e.role+'</div>'+buls+'</div>';
+  });
+
+  var ed=document.getElementById('redu');ed.innerHTML='';
+  D.ed.forEach(function(e){
+    ed.innerHTML+='<div class="red2"><div class="redd">'+e.degree+'</div><div class="reds">'+e.school+'</div><div class="redm">'+e.meta+'</div></div>';
+  });
+
+  show('output');
+}
+</script>
+</body>
+</html>
+                                                                                    
